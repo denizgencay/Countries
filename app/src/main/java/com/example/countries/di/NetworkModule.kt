@@ -1,5 +1,6 @@
 package com.example.countries.di
 
+import com.example.countries.data.remote.RapidApi
 import com.example.countries.util.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -27,7 +28,6 @@ object NetworkModule {
             .build()
     }
 
-    @OptIn(ExperimentalSerializationApi::class)
     @Provides
     @Singleton
     fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit{
@@ -37,6 +37,12 @@ object NetworkModule {
             .client(okHttpClient)
             .addConverterFactory(Json.asConverterFactory(contentType))
             .build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideRapidApi(retrofit: Retrofit): RapidApi{
+        return retrofit.create(RapidApi::class.java)
     }
 
 }
