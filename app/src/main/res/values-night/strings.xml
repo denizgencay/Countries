@@ -2,4 +2,6 @@
 <resources>
     <string name="home">Home</string>
     <string name="saved">Saved</string>
+    <string name="country">Country</string>
+    <string name="countries">Countries</string>
 </resources>
