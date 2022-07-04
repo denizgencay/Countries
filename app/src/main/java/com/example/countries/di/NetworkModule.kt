@@ -1,13 +1,14 @@
 package com.example.countries.di
 
 import com.example.countries.data.remote.RapidApi
+import com.example.countries.data.repository.RemoteDataRepositoryImpl
+import com.example.countries.domain.repository.RemoteDataRepository
 import com.example.countries.util.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
@@ -45,4 +46,45 @@ object NetworkModule {
         return retrofit.create(RapidApi::class.java)
     }
 
+    @Provides
+    @Singleton
+    fun provideRemoteDataRepository(
+        rapidApi: RapidApi
+    ):RemoteDataRepository{
+        return RemoteDataRepositoryImpl(
+            rapidApi = rapidApi
+        )
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
