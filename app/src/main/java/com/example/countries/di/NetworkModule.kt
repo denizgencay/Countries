@@ -4,6 +4,7 @@ import com.example.countries.data.remote.RapidApi
 import com.example.countries.data.repository.RemoteDataRepositoryImpl
 import com.example.countries.domain.repository.RemoteDataRepository
 import com.example.countries.util.Constants.BASE_URL
+import com.example.countries.util.dispatcher_provider.DispatcherProvider
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
@@ -12,7 +13,9 @@ import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -22,21 +25,29 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient(): OkHttpClient{
-        return OkHttpClient.Builder()
-            .readTimeout(15, TimeUnit.SECONDS)
-            .connectTimeout(15,TimeUnit.SECONDS)
-            .build()
+    fun providesLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
     }
 
     @Provides
     @Singleton
+    fun provideHttpClient(loggingInterceptor: HttpLoggingInterceptor): OkHttpClient{
+        return OkHttpClient.Builder()
+            .readTimeout(15, TimeUnit.SECONDS)
+            .connectTimeout(15,TimeUnit.SECONDS)
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
+
+
+
+    @Provides
+    @Singleton
     fun provideRetrofitInstance(okHttpClient: OkHttpClient): Retrofit{
-        val contentType = MediaType.get("application/json")
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
-            .addConverterFactory(Json.asConverterFactory(contentType))
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
@@ -49,10 +60,12 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideRemoteDataRepository(
-        rapidApi: RapidApi
+        rapidApi: RapidApi,
+        dispatcherProvider: DispatcherProvider
     ):RemoteDataRepository{
         return RemoteDataRepositoryImpl(
-            rapidApi = rapidApi
+            rapidApi = rapidApi,
+            dispatcherProvider = dispatcherProvider
         )
     }
 
