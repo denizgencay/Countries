@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Deniz/Documents/Projects/CountriesAndroid/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/Deniz/Documents/Projects/CountriesAndroid/app/src/main/res/layout/action_bar.xml" value="0.4244791666666667" />
+        <entry key="..\:/Users/Deniz/Documents/Projects/CountriesAndroid/app/src/main/res/layout/activity_country_detail.xml" value="0.1" />
+        <entry key="..\:/Users/Deniz/Documents/Projects/CountriesAndroid/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/Deniz/Documents/Projects/CountriesAndroid/app/src/main/res/layout/country_card.xml" value="0.4" />
         <entry key="..\:/Users/Deniz/Documents/Projects/CountriesAndroid/app/src/main/res/layout/fragment_all_countries.xml" value="0.264" />
         <entry key="..\:/Users/Deniz/Documents/Projects/CountriesAndroid/app/src/main/res/layout/fragment_saved_countries.xml" value="0.12001811594202899" />

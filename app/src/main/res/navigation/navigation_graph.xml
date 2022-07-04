@@ -9,10 +9,23 @@
         android:id="@+id/allCountriesFragment"
         android:name="com.example.countries.ui.all_countries.AllCountriesFragment"
         android:label="fragment_all_countries"
-        tools:layout="@layout/fragment_all_countries" />
+        tools:layout="@layout/fragment_all_countries" >
+        <action
+            android:id="@+id/action_allCountriesFragment_to_countryDetailActivity"
+            app:destination="@id/countryDetailActivity" />
+    </fragment>
     <fragment
         android:id="@+id/savedCountriesFragment"
         android:name="com.example.countries.ui.saved_countries.SavedCountriesFragment"
         android:label="fragment_saved_countries"
-        tools:layout="@layout/fragment_saved_countries" />
+        tools:layout="@layout/fragment_saved_countries" >
+        <action
+            android:id="@+id/action_savedCountriesFragment_to_countryDetailActivity"
+            app:destination="@id/countryDetailActivity" />
+    </fragment>
+    <activity
+        android:id="@+id/countryDetailActivity"
+        android:name="com.example.countries.ui.country_detail.CountryDetailActivity"
+        android:label="activity_country_detail"
+        tools:layout="@layout/activity_country_detail" />
 </navigation>
