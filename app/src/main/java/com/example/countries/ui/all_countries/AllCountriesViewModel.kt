@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.countries.domain.model.Country
 import com.example.countries.domain.repository.RemoteDataRepository
-import com.example.countries.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -25,10 +24,12 @@ class AllCountriesViewModel @Inject constructor(
         _getCountriesJob?.cancel()
         _getCountriesJob = viewModelScope.launch {
             remoteDataRepository.getAllCountries().collect{ res ->
-                apiGetCountryLoading.value = true
                 res.onSuccess {
                     apiGetCountryLoading.value = false
                     _countries.value = it.data
+                }
+                res.onLoading {
+                    apiGetCountryLoading.value = true
                 }
             }
         }

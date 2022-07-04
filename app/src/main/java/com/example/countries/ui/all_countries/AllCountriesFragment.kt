@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.countries.databinding.FragmentAllCountriesBinding
 import com.example.countries.domain.model.Country
 import com.example.countries.ui.adapter.CountriesRecyclerAdapter
-import com.example.countries.util.Resource
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -33,6 +32,15 @@ class AllCountriesFragment: Fragment() {
 
     private fun initViewModel(){
         allCountriesViewModel.getCountries()
+        observeLoading()
+        val countryObserver = Observer<List<Country>> { list ->
+            recyclerAdapter.setCountryListData(list)
+            recyclerAdapter.notifyDataSetChanged()
+        }
+        allCountriesViewModel.countries.observe(viewLifecycleOwner,countryObserver)
+    }
+
+    private fun observeLoading(){
         val loadingObserver = Observer<Boolean>{
             when (it){
                 true -> {
@@ -45,15 +53,9 @@ class AllCountriesFragment: Fragment() {
                     binding.countriesText.visibility = View.VISIBLE
                     binding.countriesRecyclerView.visibility = View.VISIBLE
                 }
-
             }
         }
-        val countryObserver = Observer<List<Country>> { list ->
-            recyclerAdapter.setCountryListData(list)
-            recyclerAdapter.notifyDataSetChanged()
-        }
         allCountriesViewModel.apiGetCountryLoading.observe(viewLifecycleOwner,loadingObserver)
-        allCountriesViewModel.countries.observe(viewLifecycleOwner,countryObserver)
     }
 
     private fun configureRecyclerView(){

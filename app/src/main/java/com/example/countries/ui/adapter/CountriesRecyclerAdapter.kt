@@ -29,10 +29,10 @@ class CountriesRecyclerAdapter(): RecyclerView.Adapter<CountriesRecyclerAdapter.
             val countryText = itemView.findViewById<TextView>(R.id.country_name)
             countryText.text = country.name
         }
+
     }
 
     fun setCountryListData(countryList: List<Country>?){
         this.countriesList = countryList
     }
-
 }

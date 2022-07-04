@@ -19,16 +19,16 @@ class CountryDetailViewModel @Inject constructor(
     private var _getCountriesJob: Job? = null
     private var _countries = MutableLiveData<CountryDetail>()
     val countries: LiveData<CountryDetail> = _countries
+    var apiGetSelectedCountryLoading = MutableLiveData(false)
 
-    fun getCountries(){
+    fun getSelectedCountry(){
         _getCountriesJob?.cancel()
         _getCountriesJob = viewModelScope.launch {
             remoteDataRepository.getSelectedCountry("US").collect{ res ->
+                apiGetSelectedCountryLoading.value = true
                 res.onSuccess {
+                    apiGetSelectedCountryLoading.value = false
                     _countries.value = it
-                }
-                res.onLoading {
-
                 }
             }
         }
