@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.countries.MainActivity
+import com.example.countries.R
 import com.example.countries.databinding.FragmentAllCountriesBinding
 import com.example.countries.domain.model.Country
 import com.example.countries.ui.adapter.CountriesRecyclerAdapter
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class AllCountriesFragment: Fragment() {
@@ -67,7 +69,7 @@ class AllCountriesFragment: Fragment() {
     private fun handleRecyclerViewClicks(){
         recyclerAdapter.setOnCardClickedListener(object: CountriesRecyclerAdapter.OnCardListener{
             override fun onCardClicked(position: Int) {
-                println("cardClicked")
+                view?.let { Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment) }
             }
 
             override fun onLikeClicked(position: Int) {

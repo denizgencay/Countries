@@ -6,9 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.countries.MainActivity
 import com.example.countries.databinding.FragmentSavedCountriesBinding
 import com.example.countries.ui.adapter.CountriesRecyclerAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class SavedCountriesFragment : Fragment() {
 
     private lateinit var binding: FragmentSavedCountriesBinding
