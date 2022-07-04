@@ -26,6 +26,7 @@ class AllCountriesFragment: Fragment() {
     ): View {
         binding = FragmentAllCountriesBinding.inflate(inflater, container, false)
         configureRecyclerView()
+        handleRecyclerViewClicks()
         initViewModel()
         return binding.root
     }
@@ -61,6 +62,23 @@ class AllCountriesFragment: Fragment() {
     private fun configureRecyclerView(){
         binding.countriesRecyclerView.layoutManager = LinearLayoutManager(context)
         binding.countriesRecyclerView.adapter = recyclerAdapter
+    }
+
+    private fun handleRecyclerViewClicks(){
+        recyclerAdapter.setOnCardClickedListener(object: CountriesRecyclerAdapter.OnCardListener{
+            override fun onCardClicked(position: Int) {
+                println("cardClicked")
+            }
+
+            override fun onLikeClicked(position: Int) {
+                println("buttoncli")
+            }
+
+            override fun onDislikeClicked(position: Int) {
+                println("buttoncli")
+            }
+
+        })
     }
 
 }
