@@ -11,8 +11,9 @@
         android:label="fragment_all_countries"
         tools:layout="@layout/fragment_all_countries" >
         <action
-            android:id="@+id/action_allCountriesFragment_to_countryDetailActivity"
-            app:destination="@id/countryDetailActivity" />
+            android:id="@+id/action_allCountriesFragment_to_countryDetailFragment"
+            app:destination="@id/countryDetailFragment"
+            app:popUpTo="@id/allCountriesFragment" />
     </fragment>
     <fragment
         android:id="@+id/savedCountriesFragment"
@@ -20,12 +21,13 @@
         android:label="fragment_saved_countries"
         tools:layout="@layout/fragment_saved_countries" >
         <action
-            android:id="@+id/action_savedCountriesFragment_to_countryDetailActivity"
-            app:destination="@id/countryDetailActivity" />
+            android:id="@+id/action_savedCountriesFragment_to_countryDetailFragment"
+            app:destination="@id/countryDetailFragment"
+            app:popUpTo="@id/savedCountriesFragment" />
     </fragment>
-    <activity
-        android:id="@+id/countryDetailActivity"
-        android:name="com.example.countries.ui.country_detail.CountryDetailActivity"
-        android:label="activity_country_detail"
-        tools:layout="@layout/activity_country_detail" />
+    <fragment
+        android:id="@+id/countryDetailFragment"
+        android:name="com.example.countries.ui.country_detail.CountryDetailFragment"
+        android:label="fragment_country_detail"
+        tools:layout="@layout/fragment_country_detail" />
 </navigation>

@@ -20,6 +20,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/countries_text"
-        android:paddingTop="10dp" />
+        android:paddingVertical="20dp" />
 
 </RelativeLayout>
