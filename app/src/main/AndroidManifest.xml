@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.countries">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
+        android:name=".CountriesApp"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -13,9 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Countries"
         tools:targetApi="31">
-        <activity
-            android:name=".CountryDetailActivity"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

@@ -1,5 +1,5 @@
 package com.example.countries.domain.model
 
-data class CountriesResponse(
+data class CountryResponse(
     val data: List<Country>
 )
