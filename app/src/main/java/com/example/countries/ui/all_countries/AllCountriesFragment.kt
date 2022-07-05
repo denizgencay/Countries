@@ -21,6 +21,7 @@ class AllCountriesFragment: Fragment() {
     private lateinit var binding: FragmentAllCountriesBinding
     private val recyclerAdapter = CountriesRecyclerAdapter()
     private val allCountriesViewModel: AllCountriesViewModel by viewModels()
+    private var countryList: List<Country> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +38,7 @@ class AllCountriesFragment: Fragment() {
         allCountriesViewModel.getCountries()
         observeLoading()
         val countryObserver = Observer<List<Country>> { list ->
+            countryList = list
             recyclerAdapter.setCountryListData(list)
             recyclerAdapter.notifyDataSetChanged()
         }
@@ -73,11 +75,21 @@ class AllCountriesFragment: Fragment() {
             }
 
             override fun onLikeClicked(position: Int) {
-                println("buttoncli")
+                val country = Country(
+                    0,
+                    countryList[position].name,
+                    countryList[position].code
+                )
+                allCountriesViewModel.addCountry(country)
             }
 
             override fun onDislikeClicked(position: Int) {
-                println("buttoncli")
+                val country = Country(
+                    0,
+                    countryList[position].name,
+                    countryList[position].code
+                )
+                allCountriesViewModel.addCountry(country)
             }
 
         })
