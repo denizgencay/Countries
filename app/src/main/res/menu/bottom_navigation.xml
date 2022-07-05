@@ -8,5 +8,5 @@
     <item
         android:id="@+id/savedCountriesFragment"
         android:title="@string/saved"
-        android:icon="@drawable/ic_favorite"/>
+        android:icon="@drawable/ic_baseline_bookmark_filled"/>
 </menu>
