@@ -21,6 +21,7 @@ class AllCountriesViewModel @Inject constructor(
 ): ViewModel(){
     private var _getCountriesJob: Job? = null
     private var _addCountryJob: Job? = null
+    private var _deleteCountryJob: Job? = null
     private var _countries = MutableLiveData<List<Country>>()
     var apiGetCountryLoading = MutableLiveData(false)
     val countries: LiveData<List<Country>> = _countries
@@ -50,8 +51,8 @@ class AllCountriesViewModel @Inject constructor(
     }
 
     fun deleteCountry(country: Country){
-        _addCountryJob?.cancel()
-        _addCountryJob = viewModelScope.launch(dispatcherProvider.io) {
+        _deleteCountryJob?.cancel()
+        _deleteCountryJob = viewModelScope.launch(dispatcherProvider.io) {
             databaseRepository.deleteCountry(country)
         }
     }
