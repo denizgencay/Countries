@@ -56,25 +56,9 @@ class SavedCountriesFragment : Fragment() {
             override fun onCardClicked(position: Int) {
                 view?.let { Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment) }
             }
-
-            override fun onLikeClicked(position: Int) {
-                val country = Country(
-                    0,
-                    savedCountries[position].name,
-                    savedCountries[position].code
-                )
-                savedCountriesViewModel.addCountry(country)
+            override fun onClicked(position: Int) {
+                savedCountriesViewModel.deleteCountry(savedCountries[position])
             }
-
-            override fun onDislikeClicked(position: Int) {
-                val country = Country(
-                    0,
-                    savedCountries[position].name,
-                    savedCountries[position].code
-                )
-                savedCountriesViewModel.addCountry(country)
-            }
-
         })
     }
 }

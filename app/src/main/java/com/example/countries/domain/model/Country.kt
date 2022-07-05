@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "country_table")
 data class Country(
     @NonNull
-    @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    @PrimaryKey
     val name: String = "",
-    val code: String = ""
+    val code: String = "",
+    val isLiked: Boolean = false
 )

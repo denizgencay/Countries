@@ -18,4 +18,8 @@ class DatabaseRepositoryImpl @Inject constructor(
     override suspend fun addCountry(country: Country) {
         countryDao.addCountry(country)
     }
+
+    override suspend fun deleteCountry(country: Country) {
+        countryDao.delete(country)
+    }
 }

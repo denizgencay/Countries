@@ -22,6 +22,7 @@ class AllCountriesFragment: Fragment() {
     private val recyclerAdapter = CountriesRecyclerAdapter()
     private val allCountriesViewModel: AllCountriesViewModel by viewModels()
     private var countryList: List<Country> = listOf()
+    private var savedCountries: List<Country> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +44,11 @@ class AllCountriesFragment: Fragment() {
             recyclerAdapter.notifyDataSetChanged()
         }
         allCountriesViewModel.countries.observe(viewLifecycleOwner,countryObserver)
+        val savedCountriesObserver = Observer<List<Country>>{
+            savedCountries = it
+            recyclerAdapter.setSelectedCountryListData(it)
+        }
+        allCountriesViewModel.getSelectedCountries.observe(viewLifecycleOwner,savedCountriesObserver)
     }
 
     private fun observeLoading(){
@@ -74,24 +80,23 @@ class AllCountriesFragment: Fragment() {
                 view?.let { Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment) }
             }
 
-            override fun onLikeClicked(position: Int) {
+            override fun onClicked(position: Int) {
                 val country = Country(
-                    0,
                     countryList[position].name,
-                    countryList[position].code
+                    countryList[position].code,
+                    true
                 )
+                for (savedCountry in savedCountries){
+                    if (countryList[position].name == savedCountry.name){
+                        allCountriesViewModel.deleteCountry(countryList[position])
+                        recyclerAdapter.notifyItemChanged(position)
+                        return
+                    }
+                }
                 allCountriesViewModel.addCountry(country)
-            }
+                recyclerAdapter.notifyItemChanged(position)
 
-            override fun onDislikeClicked(position: Int) {
-                val country = Country(
-                    0,
-                    countryList[position].name,
-                    countryList[position].code
-                )
-                allCountriesViewModel.addCountry(country)
             }
-
         })
     }
 
