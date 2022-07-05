@@ -8,12 +8,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.countries.MainActivity
 import com.example.countries.R
 import com.example.countries.databinding.FragmentSavedCountriesBinding
 import com.example.countries.domain.model.Country
 import com.example.countries.ui.adapter.CountriesRecyclerAdapter
+import com.example.countries.ui.all_countries.AllCountriesFragmentDirections
 import com.example.countries.ui.all_countries.AllCountriesViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -54,27 +56,13 @@ class SavedCountriesFragment : Fragment() {
     private fun handleRecyclerViewClicks(){
         recyclerAdapter.setOnCardClickedListener(object: CountriesRecyclerAdapter.OnCardListener{
             override fun onCardClicked(position: Int) {
-                view?.let { Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment) }
+                val action = SavedCountriesFragmentDirections.actionSavedCountriesFragmentToCountryDetailFragment()
+                action.countryCode = savedCountries[position].code
+                view!!.findNavController().navigate(action)
             }
-
-            override fun onLikeClicked(position: Int) {
-                val country = Country(
-                    0,
-                    savedCountries[position].name,
-                    savedCountries[position].code
-                )
-                savedCountriesViewModel.addCountry(country)
+            override fun onClicked(position: Int) {
+                savedCountriesViewModel.deleteCountry(savedCountries[position])
             }
-
-            override fun onDislikeClicked(position: Int) {
-                val country = Country(
-                    0,
-                    savedCountries[position].name,
-                    savedCountries[position].code
-                )
-                savedCountriesViewModel.addCountry(country)
-            }
-
         })
     }
 }

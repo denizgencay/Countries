@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.countries.MainActivity
 import com.example.countries.R
@@ -22,6 +24,7 @@ class AllCountriesFragment: Fragment() {
     private val recyclerAdapter = CountriesRecyclerAdapter()
     private val allCountriesViewModel: AllCountriesViewModel by viewModels()
     private var countryList: List<Country> = listOf()
+    private var savedCountries: List<Country> = listOf()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,6 +46,11 @@ class AllCountriesFragment: Fragment() {
             recyclerAdapter.notifyDataSetChanged()
         }
         allCountriesViewModel.countries.observe(viewLifecycleOwner,countryObserver)
+        val savedCountriesObserver = Observer<List<Country>>{
+            savedCountries = it
+            recyclerAdapter.setSelectedCountryListData(it)
+        }
+        allCountriesViewModel.getSelectedCountries.observe(viewLifecycleOwner,savedCountriesObserver)
     }
 
     private fun observeLoading(){
@@ -71,27 +79,31 @@ class AllCountriesFragment: Fragment() {
     private fun handleRecyclerViewClicks(){
         recyclerAdapter.setOnCardClickedListener(object: CountriesRecyclerAdapter.OnCardListener{
             override fun onCardClicked(position: Int) {
-                view?.let { Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment) }
+                view?.let {
+                    val action = AllCountriesFragmentDirections.actionAllCountriesFragmentToCountryDetailFragment()
+                    action.countryCode = countryList[position].code
+                    view!!.findNavController().navigate(action)
+                    //Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment)
+                }
             }
 
-            override fun onLikeClicked(position: Int) {
+            override fun onClicked(position: Int) {
                 val country = Country(
-                    0,
                     countryList[position].name,
-                    countryList[position].code
+                    countryList[position].code,
+                    true
                 )
+                for (savedCountry in savedCountries){
+                    if (countryList[position].name == savedCountry.name){
+                        allCountriesViewModel.deleteCountry(countryList[position])
+                        recyclerAdapter.notifyItemChanged(position)
+                        return
+                    }
+                }
                 allCountriesViewModel.addCountry(country)
-            }
+                recyclerAdapter.notifyItemChanged(position)
 
-            override fun onDislikeClicked(position: Int) {
-                val country = Country(
-                    0,
-                    countryList[position].name,
-                    countryList[position].code
-                )
-                allCountriesViewModel.addCountry(country)
             }
-
         })
     }
 

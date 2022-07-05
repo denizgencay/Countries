@@ -1,10 +1,7 @@
 package com.example.countries.data.remote
 
-import androidx.lifecycle.MutableLiveData
-import com.example.countries.domain.model.Country
-import com.example.countries.domain.model.CountryDetail
+import com.example.countries.domain.model.CountryDetailResponse
 import com.example.countries.domain.model.CountryResponse
-import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.Path
@@ -21,5 +18,5 @@ interface RapidApi {
     suspend fun getSelectedCountry(
         @Header("X-RapidAPI-Key") apiKey: String,
         @Path("countryCode") countryCode: String
-    ): CountryDetail
+    ): CountryDetailResponse
 }

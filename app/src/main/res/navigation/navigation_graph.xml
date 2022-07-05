@@ -29,5 +29,11 @@
         android:id="@+id/countryDetailFragment"
         android:name="com.example.countries.ui.country_detail.CountryDetailFragment"
         android:label="fragment_country_detail"
-        tools:layout="@layout/fragment_country_detail" />
+        tools:layout="@layout/fragment_country_detail" >
+        <argument
+            android:name="countryCode"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="TR" />
+    </fragment>
 </navigation>

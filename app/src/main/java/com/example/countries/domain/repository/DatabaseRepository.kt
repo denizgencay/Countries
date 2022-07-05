@@ -4,8 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.countries.domain.model.Country
 
 interface DatabaseRepository {
-
     fun readAllData(): LiveData<List<Country>>
-
     suspend fun addCountry(country: Country)
+    suspend fun deleteCountry(country: Country)
 }

@@ -22,10 +22,10 @@ class SavedCountriesViewModel @Inject constructor(
 
     val getSelectedCountries: LiveData<List<Country>> = databaseRepository.readAllData()
 
-    fun addCountry(country: Country){
+    fun deleteCountry(country: Country){
         _addCountryJob?.cancel()
         _addCountryJob = viewModelScope.launch(dispatcherProvider.io) {
-            databaseRepository.addCountry(country)
+            databaseRepository.deleteCountry(country)
         }
     }
 }

@@ -1,8 +1,7 @@
 package com.example.countries.data.repository
 
 import com.example.countries.data.remote.RapidApi
-import com.example.countries.domain.model.Country
-import com.example.countries.domain.model.CountryDetail
+import com.example.countries.domain.model.CountryDetailResponse
 import com.example.countries.domain.model.CountryResponse
 import com.example.countries.domain.repository.RemoteDataRepository
 import com.example.countries.util.Constants.API_KEY
@@ -32,7 +31,7 @@ class RemoteDataRepositoryImpl @Inject constructor(
         }.flowOn(dispatcherProvider.mainImmediate)
 
 
-    override suspend fun getSelectedCountry(countryCode: String): Flow<Resource<CountryDetail>> =
+    override suspend fun getSelectedCountry(countryCode: String): Flow<Resource<CountryDetailResponse>> =
         callbackFlow {
             trySend(Resource.Loading())
             try {
