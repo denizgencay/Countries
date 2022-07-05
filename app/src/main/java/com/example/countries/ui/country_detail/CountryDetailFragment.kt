@@ -5,18 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.NavController
-import androidx.navigation.findNavController
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.countries.MainActivity
 import com.example.countries.databinding.FragmentCountryDetailBinding
+import com.example.countries.domain.model.CountryDetail
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class CountryDetailFragment : Fragment() {
 
-    private lateinit var binding: FragmentCountryDetailBinding
+    val args: CountryDetailFragmentArgs by navArgs()
 
+    private lateinit var binding: FragmentCountryDetailBinding
+    private val countryDetailViewModel: CountryDetailViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -24,6 +28,7 @@ class CountryDetailFragment : Fragment() {
         binding = FragmentCountryDetailBinding.inflate(inflater,container,false)
         (activity as MainActivity).hideNavigationBar()
         handleAppBarClickEvents()
+        args.countryCode?.let { initViewModel(it) }
         return binding.root
     }
 
@@ -34,4 +39,30 @@ class CountryDetailFragment : Fragment() {
         }
     }
 
+    private fun initViewModel(countryCode: String){
+        countryDetailViewModel.getSelectedCountry(countryCode)
+        val countryObserver = Observer<CountryDetail> { country ->
+            binding.countryCode.text = country.code
+            binding.countryNameDetail.text = country.name
+        }
+        countryDetailViewModel.country.observe(viewLifecycleOwner,countryObserver)
+
+    }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

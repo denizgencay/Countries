@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.findViewTreeViewModelStoreOwner
 import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.countries.MainActivity
 import com.example.countries.R
@@ -77,7 +79,12 @@ class AllCountriesFragment: Fragment() {
     private fun handleRecyclerViewClicks(){
         recyclerAdapter.setOnCardClickedListener(object: CountriesRecyclerAdapter.OnCardListener{
             override fun onCardClicked(position: Int) {
-                view?.let { Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment) }
+                view?.let {
+                    val action = AllCountriesFragmentDirections.actionAllCountriesFragmentToCountryDetailFragment()
+                    action.countryCode = countryList[position].code
+                    view!!.findNavController().navigate(action)
+                    //Navigation.findNavController(it).navigate(R.id.action_allCountriesFragment_to_countryDetailFragment)
+                }
             }
 
             override fun onClicked(position: Int) {
