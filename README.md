@@ -1,14 +1,15 @@
+# CountriesApp
+ 
 An Android application for getting countries from GeoDb.
 
-Keywords
- -Kotlin
- -MVVM
- -Jetpack Navigation
- -Room Db
- -Hilt
- -Coroutines
- -ViewBinding
- -Single Activity
- -LiveData
- 
+- [MVVM]
+- [Single Activity]
+- [Jetpack Navigation]
+- [Room Db]
+- [Hilt]
+- [ViewModel]
+- [ViewBinding]
+- [LiveData]
+- [Kotlin Coroutines]
+
  
