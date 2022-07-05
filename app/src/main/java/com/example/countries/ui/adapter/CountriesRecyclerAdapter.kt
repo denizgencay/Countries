@@ -34,6 +34,9 @@ class CountriesRecyclerAdapter: RecyclerView.Adapter<CountriesRecyclerAdapter.Co
         }else{
             holder.button.setImageResource(R.drawable.ic_baseline_bookmark_un_filled)
         }
+        if (countriesList?.get(position)?.isLiked == true){
+            holder.button.setImageResource(R.drawable.ic_baseline_bookmark_filled)
+        }
 
     }
 
