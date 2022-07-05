@@ -5,7 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.countries.domain.model.Country
+import com.example.countries.domain.repository.DatabaseRepository
 import com.example.countries.domain.repository.RemoteDataRepository
+import com.example.countries.util.dispatcher_provider.DispatcherProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -13,9 +15,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AllCountriesViewModel @Inject constructor(
-    private val remoteDataRepository: RemoteDataRepository
+    private val remoteDataRepository: RemoteDataRepository,
+    private val databaseRepository: DatabaseRepository,
+    private val dispatcherProvider: DispatcherProvider
 ): ViewModel(){
     private var _getCountriesJob: Job? = null
+    private var _addCountryJob: Job? = null
     private var _countries = MutableLiveData<List<Country>>()
     var apiGetCountryLoading = MutableLiveData(false)
     val countries: LiveData<List<Country>> = _countries
@@ -32,6 +37,13 @@ class AllCountriesViewModel @Inject constructor(
                     apiGetCountryLoading.value = true
                 }
             }
+        }
+    }
+
+    fun addCountry(country: Country){
+        _addCountryJob?.cancel()
+        _addCountryJob = viewModelScope.launch(dispatcherProvider.io) {
+            databaseRepository.addCountry(country)
         }
     }
 
