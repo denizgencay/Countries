@@ -1,5 +1,6 @@
 package com.example.countries.ui.country_detail
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,6 +14,7 @@ import androidx.navigation.fragment.navArgs
 import com.example.countries.MainActivity
 import com.example.countries.databinding.FragmentCountryDetailBinding
 import com.example.countries.domain.model.CountryDetail
+import com.example.countries.util.Constants.WIKI_URL
 import com.example.countries.util.loadUrl
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -31,6 +33,7 @@ class CountryDetailFragment : Fragment() {
         (activity as MainActivity).hideNavigationBar()
         handleAppBarClickEvents()
         args.countryCode?.let { initViewModel(it) }
+
         return binding.root
     }
 
@@ -47,6 +50,12 @@ class CountryDetailFragment : Fragment() {
             binding.countryCode.text = country.code
             binding.countryNameDetail.text = country.name
             binding.imageViewFlag.loadUrl(country.flagImageUri?.replace("http","https"))
+            binding.wikiButton.setOnClickListener {
+                val queryUrl: Uri =
+                    Uri.parse("${WIKI_URL}${country.wikiDataId}")
+                val intent = Intent(Intent.ACTION_VIEW, queryUrl)
+                context?.startActivity(intent)
+            }
         }
         countryDetailViewModel.country.observe(viewLifecycleOwner,countryObserver)
 
