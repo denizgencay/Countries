@@ -13,4 +13,7 @@ An Android application for getting countries from GeoDb.
 - [LiveData]
 - [Kotlin Coroutines]
 
- 
+#Description
+
+Presenting data with instant api response and local database response for usage of both concepts.
+
